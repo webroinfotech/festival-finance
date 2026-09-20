@@ -11,7 +11,27 @@ import auditRoutes from "./routes/audit.js";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+const allowedOrigins = [
+  "https://festival-finance.webroinfotech.in",
+  "http://localhost:5173",
+  "http://localhost:4173",
+];
+if (process.env.CORS_ORIGIN) {
+  allowedOrigins.push(...process.env.CORS_ORIGIN.split(",").map((o) => o.trim()));
+}
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      // Allow non-browser requests (curl, server-to-server, health checks) which send no Origin header.
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Origin ${origin} is not allowed by CORS`));
+      }
+    },
+  })
+);
 app.use(express.json());
 
 app.get("/api/health", (req, res) => {
