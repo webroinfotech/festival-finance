@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { addAuditLog } from "../db.js";
 
-export function recordAudit({ action, entityType, entityId, performedBy, before, after }) {
+export async function recordAudit({ action, entityType, entityId, performedBy, before, after }) {
   const entry = {
     id: crypto.randomUUID(),
     action,
@@ -10,8 +10,8 @@ export function recordAudit({ action, entityType, entityId, performedBy, before,
     performedBy,
     before: before || null,
     after: after || null,
-    timestamp: new Date().toISOString(),
+    timestamp: new Date(),
   };
-  addAuditLog(entry);
+  await addAuditLog(entry);
   return entry;
 }

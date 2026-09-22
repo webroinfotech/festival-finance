@@ -5,9 +5,15 @@ Full-stack app for tracking a festival's collections and expenses — public tra
 ## Stack
 
 - **Frontend:** React (Vite), Tailwind CSS v4, Framer Motion
-- **Backend:** Node.js, Express, PDFKit (JSON file storage, no database needed)
+- **Backend:** Node.js, Express, PDFKit, MySQL
 
 ## Run it
+
+**Database** — create it once by running `backend/setup.sql` against your MySQL server:
+```
+mysql -u root -p < backend/setup.sql
+```
+Then set `DB_HOST` / `DB_PORT` / `DB_USER` / `DB_PASSWORD` / `DB_NAME` in `backend/.env` to match. `GET /api/health` reports whether the backend can reach the database.
 
 **Backend** (http://localhost:5000)
 ```
@@ -42,4 +48,4 @@ Change these in `backend/.env` before deploying anywhere public.
 
 ## Data
 
-Entries are stored in `backend/data/db.json`. Delete its contents (or reset to `{"collections":[],"expenses":[]}`) to start fresh.
+Entries live in MySQL (`festival_finance` database — see `backend/setup.sql`): `collections`, `expenses`, and `audit_log` tables.
