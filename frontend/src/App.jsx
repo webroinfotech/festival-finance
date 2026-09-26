@@ -4,6 +4,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Dashboard from "./components/Dashboard";
+import Footer from "./components/Footer";
 import LoginModal from "./components/LoginModal";
 
 function AppShell() {
@@ -21,6 +22,7 @@ function AppShell() {
       <Header onLoginClick={() => setLoginOpen(true)} />
       <Hero />
       <Dashboard />
+      <Footer />
       <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
       <Toaster
         position="top-center"
